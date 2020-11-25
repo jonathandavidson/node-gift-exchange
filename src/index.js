@@ -1,7 +1,17 @@
 const GiftExchange = require('./GiftExchange');
 
 const config = {
-  people: [],
+  people: [
+    {
+      id: 1,
+      name: 'Jonathan'
+    },
+    {
+      id: 2,
+      name: 'Erica'
+    }
+  ],
+
   restrictions: []
 };
 

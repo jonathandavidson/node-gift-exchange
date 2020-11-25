@@ -2,38 +2,30 @@ const { ModuleKind, ModuleResolutionKind } = require("typescript");
 
 class GiftExchange {
 
-  people = [
-    {
-      id: 1,
-      name: 'Jonathan'
-    },
-    {
-      id: 2,
-      name: 'Erica'
-    }
-  ];
+  people = [];
 
   restrictions = [];
 
-  results = [
-    {
-      giverId: 1,
-      recipientId: 2
-    },
-    {
-      giverId: 2,
-      recipientId: 1
-    }
-  ];
+  results = [];
 
   constructor(config) {
-    // this.people = config.people;
-    // this.restrictions = config.restrictions;
+    this.people = config.people;
+    this.restrictions = config.restrictions;
     this.pickNames();
   }
 
   pickNames() {
     console.log('picking names');
+    this.results = [
+      {
+        giverId: 1,
+        recipientId: 2
+      },
+      {
+        giverId: 2,
+        recipientId: 1
+      }
+    ]
   }
 
   logResults() {
