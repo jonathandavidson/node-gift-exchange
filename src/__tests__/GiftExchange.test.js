@@ -16,6 +16,16 @@ describe("GiftExchange", () => {
       const people = makePeople(10);
       testValidExchange(people);
     });
+
+    describe("when there are restrictions", () => {
+      const people = makePeople(3);
+      const restrictions = [
+        { buyerId: 1, recipientId: 3 },
+        { buyerId: 2, recipientId: 1 },
+        { buyerId: 3, recipientId: 2 }
+      ];
+      testValidExchange(people, restrictions);
+    })
   });
   
   function testValidExchange(people, restrictions = []) {
@@ -32,8 +42,12 @@ describe("GiftExchange", () => {
     it("no one buys for themsleves", () => {
       testNoOneBuysForThemselves(exchanges);
     });
+
+    it("honors the restrictions", () => {
+      testRestrictionsAreHonored(exchanges);
+    });
   }
-  
+
   function testNoOneBuysForThemselves(exchanges) {
     exchanges.forEach(exchange => {
       exchange.results.forEach(association => {
@@ -54,10 +68,21 @@ describe("GiftExchange", () => {
     });
   }
   
+  function testRestrictionsAreHonored(exchanges) {
+    exchanges.forEach(exchange => {
+      exchange.restrictions.forEach(restriction => {
+        const violation = exchange.results.some(result => {
+          return result.giverId === restriction.giverId && result.recipientId === restriction.recipientId;
+        });
+        expect(violation).toBe(false);
+      });
+    });
+  }
+
   function makePeople(quantity) {
     const people = [];
   
-    for (let i = 0; i < quantity; i++) {
+    for (let i = 1; i < quantity + 1; i++) {
       people.push({
         id: i,
         name: `person-${i}`
