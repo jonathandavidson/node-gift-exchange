@@ -28,35 +28,42 @@ class GiftExchange {
 
   pickNames() {
     const available = shuffle(this.people.slice(0));
-    const results = this.people.map((buyer) => {
-      const recipientIndex = available.findIndex(
-        potentialRecipient => buyer.id !== potentialRecipient.id
-      );
-  
-      let recipient;
-      if (recipientIndex < 0) {
-        recipient = available.pop();
-      } else {
-        recipient = available.splice(recipientIndex, 1)[0];
-      }
-  
+    let results = this.people.map(buyer => {
+      const recipient = available.pop();
       return {
         buyerId: buyer.id,
         recipientId: recipient.id
       };
     });
-  
-    const lastItem = results[results.length - 1];
-  
-    if (lastItem.buyerId === lastItem.recipientId) {
-      const randomIndex = Math.floor(Math.random() * (results.length - 2));
-      const temp = results[randomIndex].recipientId;
-      results[randomIndex].recipientId = results[results.length - 1].recipientId;
-      results[results.length - 1].recipientId = temp;
+
+    console.log(results);
+
+    for (let i = 0; i < results.length; i++) {
+      const buyerId = results[i].buyerId;
+      const recipientId = results[i].recipientId;
+      if (!this.isLegal(buyerId, recipientId)) {
+        const swapIndex = results.findIndex(result => {
+          return this.isLegal(result.buyerId, recipientId) && this.isLegal(buyerId, result.recipientId)
+        });
+        if (swapIndex >= 0) {
+          const newRecipientId = results[swapIndex].recipientId;
+          results[swapIndex].recipientId = results[i].recipientId;
+          results[i].recipientId = newRecipientId;
+        } else {
+          throw 'Unable to find a solution';
+        }
+      }
     }
 
     this.results = results;
   }
+
+  isLegal(buyerId, recipientId) {
+    return buyerId !== recipientId &&
+      !this.restrictions.some(restriction => {
+        return restriction.buyerId === buyerId && restriction.recipientId === recipientId;
+      });
+  };
 
   logResults() {
     this.results.forEach((result) => {

@@ -25,7 +25,7 @@ describe("GiftExchange", () => {
         { buyerId: 3, recipientId: 2 }
       ];
       testValidExchange(people, restrictions);
-    })
+    });
   });
   
   function testValidExchange(people, restrictions = []) {
