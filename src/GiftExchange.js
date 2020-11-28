@@ -72,9 +72,9 @@ class GiftExchange {
 
   logResults() {
     this.results.forEach((result) => {
-      const giver = this.people.find(person => result.giverId === person.id);
+      const buyer = this.people.find(person => result.buyerId === person.id);
       const recipient = this.people.find(person => result.recipientId === person.id);
-      console.log(`${giver.name} buys for ${recipient.name}`);
+      console.log(`${buyer.name} buys for ${recipient.name}`);
     });
   }
 
