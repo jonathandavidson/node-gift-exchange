@@ -20,6 +20,8 @@ class GiftExchange {
 
   results = [];
 
+  attemptCount = 0;
+
   constructor(config) {
     this.people = config.people;
     this.restrictions = config.restrictions;
@@ -27,6 +29,10 @@ class GiftExchange {
   }
 
   pickNames() {
+    if (this.attemptCount > 100) {
+      throw 'Unable to find a solution';
+    }
+
     const available = shuffle(this.people.slice(0));
     let results = this.people.map(buyer => {
       const recipient = available.pop();
@@ -35,8 +41,6 @@ class GiftExchange {
         recipientId: recipient.id
       };
     });
-
-    console.log(results);
 
     for (let i = 0; i < results.length; i++) {
       const buyerId = results[i].buyerId;
@@ -50,11 +54,12 @@ class GiftExchange {
           results[swapIndex].recipientId = results[i].recipientId;
           results[i].recipientId = newRecipientId;
         } else {
-          throw 'Unable to find a solution';
+          return this.pickNames();
         }
       }
     }
 
+    console.log(results);
     this.results = results;
   }
 
