@@ -54,12 +54,12 @@ class GiftExchange {
           results[swapIndex].recipientId = results[i].recipientId;
           results[i].recipientId = newRecipientId;
         } else {
+          this.attemptCount++;
           return this.pickNames();
         }
       }
     }
 
-    console.log(results);
     this.results = results;
   }
 

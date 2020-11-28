@@ -2,20 +2,20 @@ const GiftExchange = require("../GiftExchange");
 
 describe("GiftExchange", () => {
   
-    // describe("when two people are provided", () => {
-    //   const people = makePeople(2);
-    //   testValidExchange(people);
-    // });
+    describe("when two people are provided", () => {
+      const people = makePeople(2);
+      testValidExchange(people);
+    });
   
-    // describe("when three people are provided", () => {
-    //   const people = makePeople(3);
-    //   testValidExchange(people);
-    // });
+    describe("when three people are provided", () => {
+      const people = makePeople(3);
+      testValidExchange(people);
+    });
   
-    // describe("when ten people are provided", () => {
-    //   const people = makePeople(10);
-    //   testValidExchange(people);
-    // });
+    describe("when ten people are provided", () => {
+      const people = makePeople(10);
+      testValidExchange(people);
+    });
 
     describe("when there are restrictions", () => {
       const people = makePeople(3);
